@@ -5,6 +5,8 @@ class UserModel {
   String? id_no;
   String? car_or_moto;
   String? plate_number;
+  String? tax_office;
+  String? tax_number;
   String? username;
   String? emailVerifiedAt;
   String? address;
@@ -44,6 +46,8 @@ class UserModel {
     this.id_no,
     this.car_or_moto,
     this.plate_number,
+    this.tax_office,
+    this.tax_number,
     this.username,
     this.emailVerifiedAt,
     this.address,
@@ -83,6 +87,8 @@ class UserModel {
     id_no = json['id_no'];
     car_or_moto = json['car_or_moto'];
     plate_number = json['plate_number'];
+    tax_office = json['tax_office'];
+    tax_number = json['tax_number'];
     username = json['username'];
     emailVerifiedAt = json['email_verified_at'];
     address = json['address'];
@@ -118,6 +124,8 @@ class UserModel {
     data['id_no'] = this.id_no;
     data['car_or_moto'] = this.car_or_moto;
     data['plate_number'] = this.plate_number;
+    data['tax_office'] = this.tax_office;
+    data['tax_number'] = this.tax_number;
     data['username'] = this.username;
     data['email_verified_at'] = this.emailVerifiedAt;
     data['address'] = this.address;

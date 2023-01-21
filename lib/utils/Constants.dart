@@ -11,7 +11,7 @@ const digitAfterDecimal = 2;
 const CLIENT = 'client';
 const ADMIN = 'admin';
 const DELIVERYMAN = 'delivery_man';
-const Coorporate = 'coorporate';
+const Coorporate = 'corporate';
 
 const passwordLengthGlobal = 6;
 const defaultRadius = 8.0;

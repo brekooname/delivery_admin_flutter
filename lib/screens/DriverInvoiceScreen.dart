@@ -75,12 +75,6 @@ class _DriverInvoicesState extends State<DriverInvoices> {
   var anchor;
 
   savePDF() async {
-  /////////// SHEIKH
-
-    // final pdfFile = await PdfGenerator.generateTable();
-
-    ////////////////////
-
     Uint8List pdfInBytes = await pdf.save();
     final blob = html.Blob([pdfInBytes], 'application/pdf');
     final url = html.Url.createObjectUrlFromBlob(blob);
@@ -89,18 +83,6 @@ class _DriverInvoicesState extends State<DriverInvoices> {
       ..style.display = 'none'
       ..download = 'pdf.pdf';
     html.document.body!.children.add(anchor);
-
-
-
-
-    // Uint8List pdfInBytes = await pdf.save();
-    // final blob = html.Blob([pdfInBytes], 'application/pdf');
-    // final url = html.Url.createObjectUrlFromBlob(blob);
-    // anchor = html.document.createElement('a') as html.AnchorElement
-    //   ..href = url
-    //   ..style.display = 'none'
-    //   ..download = 'pdf.pdf';
-    // html.document.body!.children.add(anchor);
   }
 
   Future<void> pdfGet() async {

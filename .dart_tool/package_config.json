@@ -590,12 +590,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "open_file",
-      "rootUri": "file:///Users/ammarafzal/Development/flutter/.pub-cache/hosted/pub.dartlang.org/open_file-2.1.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
       "name": "package_config",
       "rootUri": "file:///Users/ammarafzal/Development/flutter/.pub-cache/hosted/pub.dartlang.org/package_config-2.1.0",
       "packageUri": "lib/",
@@ -1046,7 +1040,7 @@
       "languageVersion": "2.15"
     }
   ],
-  "generated": "2023-01-20T05:46:26.185920Z",
+  "generated": "2023-01-22T05:35:13.188939Z",
   "generator": "pub",
   "generatorVersion": "2.18.5"
 }

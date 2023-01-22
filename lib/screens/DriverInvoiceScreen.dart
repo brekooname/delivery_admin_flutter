@@ -18,6 +18,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import '../components/PdfGenerator.dart';
 import '../network/RestApis.dart';
 
 class DriverInvoices extends StatefulWidget {
@@ -74,6 +75,12 @@ class _DriverInvoicesState extends State<DriverInvoices> {
   var anchor;
 
   savePDF() async {
+  /////////// SHEIKH
+
+    // final pdfFile = await PdfGenerator.generateTable();
+
+    ////////////////////
+
     Uint8List pdfInBytes = await pdf.save();
     final blob = html.Blob([pdfInBytes], 'application/pdf');
     final url = html.Url.createObjectUrlFromBlob(blob);
@@ -82,6 +89,18 @@ class _DriverInvoicesState extends State<DriverInvoices> {
       ..style.display = 'none'
       ..download = 'pdf.pdf';
     html.document.body!.children.add(anchor);
+
+
+
+
+    // Uint8List pdfInBytes = await pdf.save();
+    // final blob = html.Blob([pdfInBytes], 'application/pdf');
+    // final url = html.Url.createObjectUrlFromBlob(blob);
+    // anchor = html.document.createElement('a') as html.AnchorElement
+    //   ..href = url
+    //   ..style.display = 'none'
+    //   ..download = 'pdf.pdf';
+    // html.document.body!.children.add(anchor);
   }
 
   Future<void> pdfGet() async {
@@ -94,6 +113,28 @@ class _DriverInvoicesState extends State<DriverInvoices> {
     );
 
     savePDF();
+  }
+
+  void pdfAll() async{
+    final headers = ['Year', 'Month', 'Name', 'Booking', 'Plate', 'Type', 'Earning'];
+    final drivers = driversList.map((e) => Driver(year: e.createdAtYear.toString(), month: e.createdAtMonth.toString(), name: e.name.toString(), booking: e.orderAmount!.length.toString(), plate: e.idNo.toString(), type: e.userType == "delivery_man"
+        ? "Delivery"
+        : "User", earning: e.amount.toString()));
+    // final drivers = [
+    //         Driver(year: e.createdAtYear.toString(), month: e.createdAtMonth.toString(), name: e.name.toString(), booking: e.orderAmount!.length.toString(), plate: e.idNo.toString(), type: e.userType == "delivery_man"
+    //             ? "Delivery"
+    //             : "User", earning: e.amount.toString()),
+    // ];
+    final data = drivers.map((driver) => [driver.year, driver.month, driver.name, driver.booking, driver.plate, driver.type, driver.earning]).toList();
+
+    pdf.addPage(pw.Page(
+      build: (context) => pw.Table.fromTextArray(
+        headers: headers,
+        data: data,
+      ),
+    ));
+    await savePDF();
+    anchor.click();
   }
 
   Future<void> allPdfInvoices() async {
@@ -124,6 +165,8 @@ class _DriverInvoicesState extends State<DriverInvoices> {
     }
   }
 
+
+
   @override
   void dispose() {
     driversList.clear();
@@ -146,8 +189,7 @@ class _DriverInvoicesState extends State<DriverInvoices> {
             ),
           ),
           onPressed: () async {
-            await allPdfInvoices();
-            anchor.click();
+         pdfAll();
           },
         ),
         Padding(
@@ -396,27 +438,24 @@ class _DriverInvoicesState extends State<DriverInvoices> {
                                 DataCell(Text(e.amount.toString())),
                                 DataCell(InkWell(
                                     onTap: () async {
-                                      pdf.addPage(
-                                        pw.Page(
-                                          pageFormat: PdfPageFormat.a4,
-                                          build: (pw.Context context) {
-                                            return pw.Center(
-                                              child: pw.Column(children: [
-                                                pw.Text(e.createdAtYear!),
-                                                pw.Text(e.createdAtMonth!),
-                                                pw.Text(e.name!),
-                                                pw.Text(
-                                                  e.orderAmount!.length
-                                                      .toString(),
-                                                ),
-                                                pw.Text(e.idNo!),
-                                              ]),
-                                            ); // Center
-                                          },
-                                        ),
-                                      );
-                                      //
+                                      print(e.createdAtYear.toString());
+                                      final headers = ['Year', 'Month', 'Name', 'Booking', 'Plate', 'Type', 'Earning'];
+                                      // final drivers = driversList.map((e) => Driver(year: e.createdAtYear.toString(), month: e.createdAtMonth.toString(), name: e.name.toString(), booking: e.orderAmount!.length.toString(), plate: e.idNo.toString(), type: e.userType == "delivery_man"
+                                      //                 ? "Delivery"
+                                      //                 : "User", earning: e.amount.toString()));
+                                      final drivers = [
+                                              Driver(year: e.createdAtYear.toString(), month: e.createdAtMonth.toString(), name: e.name.toString(), booking: e.orderAmount!.length.toString(), plate: e.idNo.toString(), type: e.userType == "delivery_man"
+                                                  ? "Delivery"
+                                                  : "User", earning: e.amount.toString()),
+                                      ];
+                                      final data = drivers.map((driver) => [driver.year, driver.month, driver.name, driver.booking, driver.plate, driver.type, driver.earning]).toList();
 
+                                      pdf.addPage(pw.Page(
+                                        build: (context) => pw.Table.fromTextArray(
+                                          headers: headers,
+                                          data: data,
+                                        ),
+                                      ));
                                       await savePDF();
                                       anchor.click();
                                     },
@@ -432,4 +471,22 @@ class _DriverInvoicesState extends State<DriverInvoices> {
       ],
     );
   }
+}
+class Driver {
+  final String year;
+  final String month;
+  final String name;
+  final String booking;
+  final String plate;
+  final String type;
+  final String earning;
+
+  const Driver({
+    required this.year,
+    required this.month,
+    required this.name,
+    required this.booking,
+    required this.plate,
+    required this.type,
+    required this.earning,});
 }

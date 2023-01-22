@@ -155,7 +155,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(language.city_name, style: primaryTextStyle()),
-                                SizedBox(height: 8),
+                                SizedBox(height: 4),
                                 AppTextField(
                                   controller: cityNameController,
                                   textFieldType: TextFieldType.NAME,
@@ -172,7 +172,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(language.select_country, style: primaryTextStyle()),
-                                SizedBox(height: 8),
+                                SizedBox(height: 4),
                                 DropdownButtonFormField<int>(
                                   dropdownColor: Theme.of(context).cardColor,
                                   value: selectedCountryId,
@@ -198,13 +198,13 @@ class AddCityDialogState extends State<AddCityDialog> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                       ////////////// SHEIKH ////////////////
                       ///////////////SHEIKH////////////////
                       Row(
                         // mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          SizedBox(height: 8),
+                          SizedBox(height: 4),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.25,
                             child: DropdownButtonFormField<String>(
@@ -273,7 +273,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 8),
+                      SizedBox(height: 4),
                       ////////////SHEIKH////////////////
                       ////////////// SHEIKH /////////////////////
                       Row(
@@ -283,7 +283,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(language.fixed_charge, style: primaryTextStyle()),
-                                SizedBox(height: 8),
+                                SizedBox(height: 4),
                                 AppTextField(
                                   controller: fixedChargeController,
                                   textFieldType: TextFieldType.OTHER,
@@ -307,7 +307,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(language.cancel_charge, style: primaryTextStyle()),
-                                SizedBox(height: 8),
+                                SizedBox(height: 4),
                                 AppTextField(
                                   controller: cancelChargeController,
                                   textFieldType: TextFieldType.OTHER,
@@ -327,7 +327,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16,),
+                      SizedBox(height: 4,),
                       Row(
                         children: [
                           Expanded(
@@ -335,7 +335,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('${language.minimum_distance} ${distanceType.isNotEmpty ? '($distanceType)' : ''}', style: primaryTextStyle()),
-                                SizedBox(height: 8),
+                                SizedBox(height: 4),
                                 AppTextField(
                                   controller: minDistanceController,
                                   textFieldType: TextFieldType.OTHER,
@@ -359,7 +359,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('Maximum Distance', style: primaryTextStyle()),
-                                SizedBox(height: 8),
+                                SizedBox(height: 4),
                                 AppTextField(
                                   controller: maxDistanceController,
                                   textFieldType: TextFieldType.OTHER,
@@ -379,7 +379,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 4),
                       //////// Sheikh
                       Row(
                         children: [
@@ -388,7 +388,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('${language.minimum_weight} ${weightType.isNotEmpty ? '($weightType)' : ''}', style: primaryTextStyle()),
-                                SizedBox(height: 8),
+                                SizedBox(height: 4),
                                 AppTextField(
                                   controller: minWeightController,
                                   textFieldType: TextFieldType.OTHER,
@@ -412,7 +412,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('Maximum Weight', style: primaryTextStyle()),
-                                SizedBox(height: 8),
+                                SizedBox(height: 4),
                                 AppTextField(
                                   controller: maxWeightController,
                                   textFieldType: TextFieldType.OTHER,
@@ -434,7 +434,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                       ),
                       ////////////// Sheikh
 
-                      SizedBox(height: 16),
+                      SizedBox(height: 4),
                       Row(
                         children: [
                           Expanded(
@@ -442,7 +442,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(language.per_distance_charge, style: primaryTextStyle()),
-                                SizedBox(height: 8),
+                                SizedBox(height: 4),
                                 AppTextField(
                                   controller: perDistanceChargeController,
                                   textFieldType: TextFieldType.OTHER,
@@ -466,7 +466,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(language.per_weight_charge, style: primaryTextStyle()),
-                                SizedBox(height: 8),
+                                SizedBox(height: 4),
                                 AppTextField(
                                   controller: perWeightChargeChargeController,
                                   textFieldType: TextFieldType.PHONE,

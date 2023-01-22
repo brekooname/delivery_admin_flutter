@@ -601,9 +601,10 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                       ],
                     ),
                   ),
-                if(isDeliverNow)
+                // if(isDeliverNow)
                 ///////////////SHEIKH////////////////
-                  SizedBox(height: 8),
+                SizedBox(height: 8,),
+                if(isDeliverNow)
                   Row(
                     // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [

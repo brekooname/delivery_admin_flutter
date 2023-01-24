@@ -61,6 +61,8 @@ class AddCityDialogState extends State<AddCityDialog> {
       fixedChargeController.text = widget.cityData!.fixedCharges.toString();
       cancelChargeController.text = widget.cityData!.cancelCharges.toString();
       minDistanceController.text = widget.cityData!.minDistance.toString();
+      maxWeightController.text = widget.cityData!.maxWeight.toString();
+      maxDistanceController.text = widget.cityData!.maxDistance.toString();
       minWeightController.text = widget.cityData!.minWeight.toString();
       perDistanceChargeController.text = widget.cityData!.perDistanceCharges.toString();
       perWeightChargeChargeController.text = widget.cityData!.perWeightCharges.toString();

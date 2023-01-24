@@ -42,6 +42,8 @@ class CityData {
   List<ExtraChargesData>? extraCharges;
   double? cancelCharges;
   double? minDistance;
+  double? maxDistance;
+  double? maxWeight;
   double? minWeight;
   double? perDistanceCharges;
   double? perWeightCharges;
@@ -61,6 +63,8 @@ class CityData {
       this.extraCharges,
       this.cancelCharges,
       this.minDistance,
+        this.maxWeight,
+      this.maxDistance,
       this.minWeight,
       this.perDistanceCharges,
       this.perWeightCharges,
@@ -85,6 +89,8 @@ class CityData {
     }
     cancelCharges = json['cancel_charges'];
     minDistance = json['min_distance'];
+    maxDistance = json['max_distance'];
+    maxWeight = json['max_weight'];
     minWeight = json['min_weight'];
     perDistanceCharges = json['per_distance_charges'];
     perWeightCharges = json['per_weight_charges'];
@@ -109,6 +115,8 @@ class CityData {
     data['cancel_charges'] = this.cancelCharges;
     data['min_distance'] = this.minDistance;
     data['min_weight'] = this.minWeight;
+    data['max_distance'] = this.maxDistance;
+    data['max_weight'] = this.maxWeight;
     data['per_distance_charges'] = this.perDistanceCharges;
     data['per_weight_charges'] = this.perWeightCharges;
     data['created_at'] = this.createdAt;

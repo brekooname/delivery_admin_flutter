@@ -130,7 +130,7 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
 
   getCityApiCall({String? name}) async {
     appStore.setLoading(true);
-    await getCityList(countryId: selectedCountry!).then((value) {
+    await getCityList(countryId: selectedCountry!, vehicle_type: vehicle, order_type: isBike ? delivery : delivery1).then((value) {
       appStore.setLoading(false);
       cityList.clear();
       cityList.addAll(value.data!);

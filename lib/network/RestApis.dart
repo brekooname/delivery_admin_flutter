@@ -410,6 +410,8 @@ Future<CityListModel> getCityList(
     {int? page,
     bool isDeleted = false,
     int? countryId,
+      String? vehicle_type,
+      String? order_type,
     int? perPage = 10}) async {
   if (countryId == null) {
     return CityListModel.fromJson(await handleResponse(await buildHttpResponse(
@@ -419,7 +421,7 @@ Future<CityListModel> getCityList(
         method: HttpMethod.GET)));
   } else {
     return CityListModel.fromJson(await handleResponse(await buildHttpResponse(
-        'city-list?per_page=-1&country_id=$countryId',
+        'city-list?per_page=-1&country_id=$countryId&vehicle_type=$vehicle_type&order_type=$order_type',
         method: HttpMethod.GET)));
   }
 }

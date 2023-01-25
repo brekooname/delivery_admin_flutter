@@ -428,7 +428,7 @@ class _DriverInvoicesState extends State<DriverInvoices> {
                                       final drivers = [
                                               Driver(year: e.createdAtYear.toString(), month: e.createdAtMonth.toString(), name: e.name.toString(), booking: e.orderAmount!.length.toString(), plate: e.idNo.toString(), type: e.userType == "delivery_man"
                                                   ? "Delivery"
-                                                  : "User", earning: e.amount.toString()),
+                                                  : "User", earning: '${e.amount.toString()} TL'),
                                       ];
                                       final data = drivers.map((driver) => [driver.year, driver.month, driver.name, driver.booking, driver.plate, driver.type, driver.earning]).toList();
 

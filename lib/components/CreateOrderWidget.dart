@@ -29,7 +29,7 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isDeliverNow = true;
   String paymentCollectFrom = PAYMENT_ON_PICKUP;
-  bool isBike = false;
+  bool isBike = true;
   String vehicle = 'Bike';
   String delivery = 'In-Day Delivery';
   String delivery1 = 'Express Delivery';
@@ -54,8 +54,8 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
   TextEditingController deliverFromTimeController = TextEditingController();
   TextEditingController deliverToTimeController = TextEditingController();
 
-  String deliverCountryCode = '+91';
-  String pickupCountryCode = '+91';
+  String deliverCountryCode = '+90';
+  String pickupCountryCode = '+90';
 
   DateTime? pickFromDateTime, pickToDateTime, deliverFromDateTime, deliverToDateTime;
   DateTime? pickDate, deliverDate;
@@ -360,76 +360,94 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                     child: Column(
                       children: [
                         ///////////////SHEIKH////////////////
+
                         Row(
                           // mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             SizedBox(height: 8),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.25,
-                              child: DropdownButtonFormField<String>(
-                                isExpanded: true,
-                                value: vehicle,
-                                dropdownColor: Theme.of(context).cardColor,
-                                style: primaryTextStyle(),
-                                decoration: commonInputDecoration(),
-                                items: [
-                                  DropdownMenuItem(value: language.bike, child: Text(language.bike, style: primaryTextStyle(), maxLines: 1)),
-                                  DropdownMenuItem(value: language.car, child: Text(language.car, style: primaryTextStyle(), maxLines: 1)),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Vehicle Type', style: boldTextStyle()),
+                                SizedBox(height: 8,),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.25,
+                                  child: DropdownButtonFormField<String>(
+                                    isExpanded: true,
+                                    value: vehicle,
+                                    dropdownColor: Theme.of(context).cardColor,
+                                    style: primaryTextStyle(),
+                                    decoration: commonInputDecoration(),
+                                    items: [
+                                      DropdownMenuItem(value: language.bike, child: Text(language.bike, style: primaryTextStyle(), maxLines: 1)),
+                                      DropdownMenuItem(value: language.car, child: Text(language.car, style: primaryTextStyle(), maxLines: 1)),
 
-                                ],
-                                onChanged: (value) {
-                                  vehicle = value!;
-                                  print(vehicle);
-                                  setState(() {
-                                      if(vehicle == "Bike"){
-                                        isBike = true;
-                                      }
-                                      else{
-                                        isBike  = false;
-                                      }
-                                  });
-                                },
-                              ),
+                                    ],
+                                    onChanged: (value) {
+                                      vehicle = value!;
+                                      print(vehicle);
+                                      setState(() {
+                                        if(vehicle == "Bike"){
+                                          isBike = true;
+                                        }
+                                        else{
+                                          isBike  = false;
+                                        }
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(width: 8),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Delivery Type', style: boldTextStyle()),
+                                SizedBox(height: 8,),
+                                isBike ? SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.25,
+                                  child: DropdownButtonFormField<String>(
+                                    isExpanded: true,
+                                    value: delivery,
+                                    dropdownColor: Theme.of(context).cardColor,
+                                    style: primaryTextStyle(),
+                                    decoration: commonInputDecoration(),
+                                    items: [
+                                      DropdownMenuItem(value: language.in_day, child: Text(language.in_day, style: primaryTextStyle(), maxLines: 1)),
+                                      DropdownMenuItem(value: language.express, child: Text(language.express, style: primaryTextStyle(), maxLines: 1)),
+                                      DropdownMenuItem(value: language.vip, child: Text(language.vip, style: primaryTextStyle(), maxLines: 1)),
+                                    ],
+                                    onChanged: (value) {
+                                      delivery = value!;
+                                      setState(() {});
+                                    },
+                                  ),
+                                ) :
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.25,
+                                  child: DropdownButtonFormField<String>(
+                                    isExpanded: true,
+                                    value: delivery1,
+                                    dropdownColor: Theme.of(context).cardColor,
+                                    style: primaryTextStyle(),
+                                    decoration: commonInputDecoration(),
+                                    items: [
+                                      DropdownMenuItem(value: language.express, child: Text(language.express, style: primaryTextStyle(), maxLines: 1)),
+                                      DropdownMenuItem(value: language.vip, child: Text(language.vip, style: primaryTextStyle(), maxLines: 1)),
+                                    ],
+                                    onChanged: (value) {
+                                      delivery1 = value!;
+                                      setState(() {});
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
 
-                           isBike ? SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.25,
-                              child: DropdownButtonFormField<String>(
-                                isExpanded: true,
-                                value: delivery,
-                                dropdownColor: Theme.of(context).cardColor,
-                                style: primaryTextStyle(),
-                                decoration: commonInputDecoration(),
-                                items: [
-                                  DropdownMenuItem(value: language.in_day, child: Text(language.in_day, style: primaryTextStyle(), maxLines: 1)),
-                                  DropdownMenuItem(value: language.express, child: Text(language.express, style: primaryTextStyle(), maxLines: 1)),
-                                  DropdownMenuItem(value: language.vip, child: Text(language.vip, style: primaryTextStyle(), maxLines: 1)),
-                                ],
-                                onChanged: (value) {
-                                  delivery = value!;
-                                  setState(() {});
-                                },
-                              ),
-                            ) :
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.25,
-                              child: DropdownButtonFormField<String>(
-                                isExpanded: true,
-                                value: delivery1,
-                                dropdownColor: Theme.of(context).cardColor,
-                                style: primaryTextStyle(),
-                                decoration: commonInputDecoration(),
-                                items: [
-                                  DropdownMenuItem(value: language.express, child: Text(language.express, style: primaryTextStyle(), maxLines: 1)),
-                                  DropdownMenuItem(value: language.vip, child: Text(language.vip, style: primaryTextStyle(), maxLines: 1)),
-                                ],
-                                onChanged: (value) {
-                                  delivery1 = value!;
-                                  setState(() {});
-                                },
-                              ),
-                            ),
+
+
+
                           ],
                         ),
                         SizedBox(height: 8),
@@ -609,71 +627,89 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                     // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       SizedBox(height: 8),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        child: DropdownButtonFormField<String>(
-                          isExpanded: true,
-                          value: vehicle,
-                          dropdownColor: Theme.of(context).cardColor,
-                          style: primaryTextStyle(),
-                          decoration: commonInputDecoration(),
-                          items: [
-                            DropdownMenuItem(value: language.bike, child: Text(language.bike, style: primaryTextStyle(), maxLines: 1)),
-                            DropdownMenuItem(value: language.car, child: Text(language.car, style: primaryTextStyle(), maxLines: 1)),
-                          ],
-                          onChanged: (value) {
-                            vehicle = value!;
-                            print(vehicle);
-                            setState(() {
-                              if(vehicle == "Bike"){
-                                isBike = true;
-                              }
-                              else{
-                                isBike  = false;
-                              }
-                            });
-                          },
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Vehicle Type', style: boldTextStyle()),
+                          SizedBox(height: 8,),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.25,
+                            child: DropdownButtonFormField<String>(
+                              isExpanded: true,
+                              value: vehicle,
+                              dropdownColor: Theme.of(context).cardColor,
+                              style: primaryTextStyle(),
+                              decoration: commonInputDecoration(),
+                              items: [
+                                DropdownMenuItem(value: language.bike, child: Text(language.bike, style: primaryTextStyle(), maxLines: 1)),
+                                DropdownMenuItem(value: language.car, child: Text(language.car, style: primaryTextStyle(), maxLines: 1)),
+
+                              ],
+                              onChanged: (value) {
+                                vehicle = value!;
+                                print(vehicle);
+                                setState(() {
+                                  if(vehicle == "Bike"){
+                                    isBike = true;
+                                  }
+                                  else{
+                                    isBike  = false;
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(width: 8),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Delivery Type', style: boldTextStyle()),
+                          SizedBox(height: 8,),
+                          isBike ? SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.25,
+                            child: DropdownButtonFormField<String>(
+                              isExpanded: true,
+                              value: delivery,
+                              dropdownColor: Theme.of(context).cardColor,
+                              style: primaryTextStyle(),
+                              decoration: commonInputDecoration(),
+                              items: [
+                                DropdownMenuItem(value: language.in_day, child: Text(language.in_day, style: primaryTextStyle(), maxLines: 1)),
+                                DropdownMenuItem(value: language.express, child: Text(language.express, style: primaryTextStyle(), maxLines: 1)),
+                                DropdownMenuItem(value: language.vip, child: Text(language.vip, style: primaryTextStyle(), maxLines: 1)),
+                              ],
+                              onChanged: (value) {
+                                delivery = value!;
+                                setState(() {});
+                              },
+                            ),
+                          ) :
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.25,
+                            child: DropdownButtonFormField<String>(
+                              isExpanded: true,
+                              value: delivery1,
+                              dropdownColor: Theme.of(context).cardColor,
+                              style: primaryTextStyle(),
+                              decoration: commonInputDecoration(),
+                              items: [
+                                DropdownMenuItem(value: language.express, child: Text(language.express, style: primaryTextStyle(), maxLines: 1)),
+                                DropdownMenuItem(value: language.vip, child: Text(language.vip, style: primaryTextStyle(), maxLines: 1)),
+                              ],
+                              onChanged: (value) {
+                                delivery1 = value!;
+                                setState(() {});
+                              },
+                            ),
+                          ),
+                        ],
+                      )
 
-                      isBike ? SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        child: DropdownButtonFormField<String>(
-                          isExpanded: true,
-                          value: delivery,
-                          dropdownColor: Theme.of(context).cardColor,
-                          style: primaryTextStyle(),
-                          decoration: commonInputDecoration(),
-                          items: [
-                            DropdownMenuItem(value: language.in_day, child: Text(language.in_day, style: primaryTextStyle(), maxLines: 1)),
-                            DropdownMenuItem(value: language.express, child: Text(language.express, style: primaryTextStyle(), maxLines: 1)),
-                            DropdownMenuItem(value: language.vip, child: Text(language.vip, style: primaryTextStyle(), maxLines: 1)),
-                          ],
-                          onChanged: (value) {
-                            delivery = value!;
-                            setState(() {});
-                          },
-                        ),
-                      ) :
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        child: DropdownButtonFormField<String>(
-                          isExpanded: true,
-                          value: delivery1,
-                          dropdownColor: Theme.of(context).cardColor,
-                          style: primaryTextStyle(),
-                          decoration: commonInputDecoration(),
-                          items: [
-                            DropdownMenuItem(value: language.express, child: Text(language.express, style: primaryTextStyle(), maxLines: 1)),
-                            DropdownMenuItem(value: language.vip, child: Text(language.vip, style: primaryTextStyle(), maxLines: 1)),
-                          ],
-                          onChanged: (value) {
-                            delivery1 = value!;
-                            setState(() {});
-                          },
-                        ),
-                      ),
+
+
+
                     ],
                   ),
                 SizedBox(height: 8),

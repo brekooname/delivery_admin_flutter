@@ -37,6 +37,8 @@ class CityData {
   String? address;
   int? countryId;
   String? countryName;
+  String? vehicle_type;
+  String? order_type;
   int? status;
   double? fixedCharges;
   List<ExtraChargesData>? extraCharges;
@@ -58,6 +60,8 @@ class CityData {
       this.address,
       this.countryId,
       this.countryName,
+        this.vehicle_type,
+        this.order_type,
       this.status,
       this.fixedCharges,
       this.extraCharges,
@@ -79,6 +83,8 @@ class CityData {
     address = json['address'];
     countryId = json['country_id'];
     countryName = json['country_name'];
+    vehicle_type = json['vehicle_type'];
+    order_type = json['order_type'];
     status = json['status'];
     fixedCharges = json['fixed_charges'];
     if (json['extra_charges'] != null) {
@@ -107,6 +113,8 @@ class CityData {
     data['address'] = this.address;
     data['country_id'] = this.countryId;
     data['country_name'] = this.countryName;
+    data['vehicle_type'] = this.vehicle_type;
+    data['order_type'] = this.order_type;
     data['status'] = this.status;
     data['fixed_charges'] = this.fixedCharges;
     if (this.extraCharges != null) {

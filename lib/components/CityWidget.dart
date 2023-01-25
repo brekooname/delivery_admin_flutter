@@ -169,6 +169,8 @@ class CityWidgetState extends State<CityWidget> {
                                       DataColumn(label: Text(language.id)),
                                       DataColumn(label: Text(language.city_name)),
                                       DataColumn(label: Text(language.country_name)),
+                                      DataColumn(label: Text("Vehicle Type")),
+                                      DataColumn(label: Text("Delivery Type")),
                                       DataColumn(label: Text(language.created_date)),
                                       DataColumn(label: Text(language.status)),
                                       DataColumn(label: Text(language.actions)),
@@ -178,6 +180,8 @@ class CityWidgetState extends State<CityWidget> {
                                         DataCell(Text('${mData.id}')),
                                         DataCell(Text('${mData.name ?? "-"}')),
                                         DataCell(Text('${mData.countryName ?? "-"}')),
+                                        DataCell(Text('${mData.vehicle_type ?? "-"}')),
+                                        DataCell(Text('${mData.order_type ?? "-"}')),
                                         DataCell(Text(printDate(mData.createdAt ?? ""))),
                                         DataCell(TextButton(
                                           child: Text(

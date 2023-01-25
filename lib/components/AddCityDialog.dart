@@ -39,7 +39,7 @@ class AddCityDialogState extends State<AddCityDialog> {
   String weightType = '';
 
   bool isUpdate = false;
-  bool isBike = false;
+  bool isBike = true;
   String vehicle = 'Bike';
   String delivery = 'In-Day Delivery';
   String delivery1 = 'Express Delivery';
@@ -66,6 +66,11 @@ class AddCityDialogState extends State<AddCityDialog> {
       minWeightController.text = widget.cityData!.minWeight.toString();
       perDistanceChargeController.text = widget.cityData!.perDistanceCharges.toString();
       perWeightChargeChargeController.text = widget.cityData!.perWeightCharges.toString();
+      if(widget.cityData!.vehicle_type.toString() != null){
+        vehicle =  widget.cityData!.vehicle_type.toString();
+        delivery =  widget.cityData!.order_type.toString();
+        delivery1 =  widget.cityData!.order_type.toString();
+      }
       appStore.countryList.forEach((element) {
         if(element.id == widget.cityData!.countryId){
           selectedCountryId = widget.cityData!.countryId;
@@ -158,12 +163,15 @@ class AddCityDialogState extends State<AddCityDialog> {
                               children: [
                                 Text(language.city_name, style: primaryTextStyle()),
                                 SizedBox(height: 4),
-                                AppTextField(
-                                  controller: cityNameController,
-                                  textFieldType: TextFieldType.NAME,
-                                  decoration: commonInputDecoration(),
-                                  textInputAction: TextInputAction.next,
-                                  errorThisFieldRequired: language.field_required_msg,
+                                SizedBox(
+                                  height: 55,
+                                  child: AppTextField(
+                                    controller: cityNameController,
+                                    textFieldType: TextFieldType.NAME,
+                                    decoration: commonInputDecoration(),
+                                    textInputAction: TextInputAction.next,
+                                    errorThisFieldRequired: language.field_required_msg,
+                                  ),
                                 ),
                               ],
                             ),
@@ -175,25 +183,28 @@ class AddCityDialogState extends State<AddCityDialog> {
                               children: [
                                 Text(language.select_country, style: primaryTextStyle()),
                                 SizedBox(height: 4),
-                                DropdownButtonFormField<int>(
-                                  dropdownColor: Theme.of(context).cardColor,
-                                  value: selectedCountryId,
-                                  decoration: commonInputDecoration(),
-                                  items: appStore.countryList.map<DropdownMenuItem<int>>((item) {
-                                    return DropdownMenuItem(
-                                      value: item.id,
-                                      child: Text(item.name!, style: primaryTextStyle()),
-                                    );
-                                  }).toList(),
-                                  onChanged: (value) {
-                                    selectedCountryId = value;
-                                    getDistanceAndWeightType();
-                                    setState(() {});
-                                  },
-                                  validator: (value) {
-                                    if (selectedCountryId == null) return language.field_required_msg;
-                                    return null;
-                                  },
+                                SizedBox(
+                                  height: 55,
+                                  child: DropdownButtonFormField<int>(
+                                    dropdownColor: Theme.of(context).cardColor,
+                                    value: selectedCountryId,
+                                    decoration: commonInputDecoration(),
+                                    items: appStore.countryList.map<DropdownMenuItem<int>>((item) {
+                                      return DropdownMenuItem(
+                                        value: item.id,
+                                        child: Text(item.name!, style: primaryTextStyle()),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      selectedCountryId = value;
+                                      getDistanceAndWeightType();
+                                      setState(() {});
+                                    },
+                                    validator: (value) {
+                                      if (selectedCountryId == null) return language.field_required_msg;
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -209,6 +220,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                           SizedBox(height: 4),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.25,
+                            height: 55,
                             child: DropdownButtonFormField<String>(
                               isExpanded: true,
                               value: vehicle,
@@ -238,6 +250,7 @@ class AddCityDialogState extends State<AddCityDialog> {
 
                           isBike ? SizedBox(
                             width: MediaQuery.of(context).size.width * 0.25,
+                            height: 55,
                             child: DropdownButtonFormField<String>(
                               isExpanded: true,
                               value: delivery,
@@ -257,6 +270,7 @@ class AddCityDialogState extends State<AddCityDialog> {
                           ) :
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.25,
+                            height: 55,
                             child: DropdownButtonFormField<String>(
                               isExpanded: true,
                               value: delivery1,
@@ -286,19 +300,22 @@ class AddCityDialogState extends State<AddCityDialog> {
                               children: [
                                 Text(language.fixed_charge, style: primaryTextStyle()),
                                 SizedBox(height: 4),
-                                AppTextField(
-                                  controller: fixedChargeController,
-                                  textFieldType: TextFieldType.OTHER,
-                                  decoration: commonInputDecoration(),
-                                  errorThisFieldRequired: language.field_required_msg,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
-                                  ],
-                                  textInputAction: TextInputAction.next,
-                                  validator: (s) {
-                                    if (s!.trim().isEmpty) return language.field_required_msg;
-                                    return null;
-                                  },
+                                SizedBox(
+                                  height: 55,
+                                  child: AppTextField(
+                                    controller: fixedChargeController,
+                                    textFieldType: TextFieldType.OTHER,
+                                    decoration: commonInputDecoration(),
+                                    errorThisFieldRequired: language.field_required_msg,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
+                                    ],
+                                    textInputAction: TextInputAction.next,
+                                    validator: (s) {
+                                      if (s!.trim().isEmpty) return language.field_required_msg;
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -310,19 +327,22 @@ class AddCityDialogState extends State<AddCityDialog> {
                               children: [
                                 Text(language.cancel_charge, style: primaryTextStyle()),
                                 SizedBox(height: 4),
-                                AppTextField(
-                                  controller: cancelChargeController,
-                                  textFieldType: TextFieldType.OTHER,
-                                  decoration: commonInputDecoration(),
-                                  textInputAction: TextInputAction.next,
-                                  errorThisFieldRequired: language.field_required_msg,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
-                                  ],
-                                  validator: (s) {
-                                    if (s!.trim().isEmpty) return language.field_required_msg;
-                                    return null;
-                                  },
+                                SizedBox(
+                                  height: 55,
+                                  child: AppTextField(
+                                    controller: cancelChargeController,
+                                    textFieldType: TextFieldType.OTHER,
+                                    decoration: commonInputDecoration(),
+                                    textInputAction: TextInputAction.next,
+                                    errorThisFieldRequired: language.field_required_msg,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
+                                    ],
+                                    validator: (s) {
+                                      if (s!.trim().isEmpty) return language.field_required_msg;
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -338,19 +358,22 @@ class AddCityDialogState extends State<AddCityDialog> {
                               children: [
                                 Text('${language.minimum_distance} ${distanceType.isNotEmpty ? '($distanceType)' : ''}', style: primaryTextStyle()),
                                 SizedBox(height: 4),
-                                AppTextField(
-                                  controller: minDistanceController,
-                                  textFieldType: TextFieldType.OTHER,
-                                  decoration: commonInputDecoration(),
-                                  textInputAction: TextInputAction.next,
-                                  errorThisFieldRequired: language.field_required_msg,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
-                                  ],
-                                  validator: (s) {
-                                    if (s!.trim().isEmpty) return language.field_required_msg;
-                                    return null;
-                                  },
+                                SizedBox(
+                                  height: 55,
+                                  child: AppTextField(
+                                    controller: minDistanceController,
+                                    textFieldType: TextFieldType.OTHER,
+                                    decoration: commonInputDecoration(),
+                                    textInputAction: TextInputAction.next,
+                                    errorThisFieldRequired: language.field_required_msg,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
+                                    ],
+                                    validator: (s) {
+                                      if (s!.trim().isEmpty) return language.field_required_msg;
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -362,19 +385,22 @@ class AddCityDialogState extends State<AddCityDialog> {
                               children: [
                                 Text('Maximum Distance', style: primaryTextStyle()),
                                 SizedBox(height: 4),
-                                AppTextField(
-                                  controller: maxDistanceController,
-                                  textFieldType: TextFieldType.OTHER,
-                                  decoration: commonInputDecoration(),
-                                  textInputAction: TextInputAction.next,
-                                  errorThisFieldRequired: language.field_required_msg,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
-                                  ],
-                                  validator: (s) {
-                                    if (s!.trim().isEmpty) return language.field_required_msg;
-                                    return null;
-                                  },
+                                SizedBox(
+                                  height: 55,
+                                  child: AppTextField(
+                                    controller: maxDistanceController,
+                                    textFieldType: TextFieldType.OTHER,
+                                    decoration: commonInputDecoration(),
+                                    textInputAction: TextInputAction.next,
+                                    errorThisFieldRequired: language.field_required_msg,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
+                                    ],
+                                    validator: (s) {
+                                      if (s!.trim().isEmpty) return language.field_required_msg;
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -391,19 +417,22 @@ class AddCityDialogState extends State<AddCityDialog> {
                               children: [
                                 Text('${language.minimum_weight} ${weightType.isNotEmpty ? '($weightType)' : ''}', style: primaryTextStyle()),
                                 SizedBox(height: 4),
-                                AppTextField(
-                                  controller: minWeightController,
-                                  textFieldType: TextFieldType.OTHER,
-                                  decoration: commonInputDecoration(),
-                                  textInputAction: TextInputAction.next,
-                                  errorThisFieldRequired: language.field_required_msg,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
-                                  ],
-                                  validator: (s) {
-                                    if (s!.trim().isEmpty) return language.field_required_msg;
-                                    return null;
-                                  },
+                                SizedBox(
+                                  height: 55,
+                                  child: AppTextField(
+                                    controller: minWeightController,
+                                    textFieldType: TextFieldType.OTHER,
+                                    decoration: commonInputDecoration(),
+                                    textInputAction: TextInputAction.next,
+                                    errorThisFieldRequired: language.field_required_msg,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
+                                    ],
+                                    validator: (s) {
+                                      if (s!.trim().isEmpty) return language.field_required_msg;
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -415,19 +444,22 @@ class AddCityDialogState extends State<AddCityDialog> {
                               children: [
                                 Text('Maximum Weight', style: primaryTextStyle()),
                                 SizedBox(height: 4),
-                                AppTextField(
-                                  controller: maxWeightController,
-                                  textFieldType: TextFieldType.OTHER,
-                                  decoration: commonInputDecoration(),
-                                  textInputAction: TextInputAction.next,
-                                  errorThisFieldRequired: language.field_required_msg,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
-                                  ],
-                                  validator: (s) {
-                                    if (s!.trim().isEmpty) return language.field_required_msg;
-                                    return null;
-                                  },
+                                SizedBox(
+                                  height: 55,
+                                  child: AppTextField(
+                                    controller: maxWeightController,
+                                    textFieldType: TextFieldType.OTHER,
+                                    decoration: commonInputDecoration(),
+                                    textInputAction: TextInputAction.next,
+                                    errorThisFieldRequired: language.field_required_msg,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
+                                    ],
+                                    validator: (s) {
+                                      if (s!.trim().isEmpty) return language.field_required_msg;
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -445,19 +477,22 @@ class AddCityDialogState extends State<AddCityDialog> {
                               children: [
                                 Text(language.per_distance_charge, style: primaryTextStyle()),
                                 SizedBox(height: 4),
-                                AppTextField(
-                                  controller: perDistanceChargeController,
-                                  textFieldType: TextFieldType.OTHER,
-                                  decoration: commonInputDecoration(),
-                                  textInputAction: TextInputAction.next,
-                                  errorThisFieldRequired: language.field_required_msg,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
-                                  ],
-                                  validator: (s) {
-                                    if (s!.trim().isEmpty) return language.field_required_msg;
-                                    return null;
-                                  },
+                                SizedBox(
+                                  height: 55,
+                                  child: AppTextField(
+                                    controller: perDistanceChargeController,
+                                    textFieldType: TextFieldType.OTHER,
+                                    decoration: commonInputDecoration(),
+                                    textInputAction: TextInputAction.next,
+                                    errorThisFieldRequired: language.field_required_msg,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
+                                    ],
+                                    validator: (s) {
+                                      if (s!.trim().isEmpty) return language.field_required_msg;
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -469,19 +504,22 @@ class AddCityDialogState extends State<AddCityDialog> {
                               children: [
                                 Text(language.per_weight_charge, style: primaryTextStyle()),
                                 SizedBox(height: 4),
-                                AppTextField(
-                                  controller: perWeightChargeChargeController,
-                                  textFieldType: TextFieldType.PHONE,
-                                  decoration: commonInputDecoration(),
-                                  textInputAction: TextInputAction.next,
-                                  errorThisFieldRequired: language.field_required_msg,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
-                                  ],
-                                  validator: (s) {
-                                    if (s!.trim().isEmpty) return language.field_required_msg;
-                                    return null;
-                                  },
+                                SizedBox(
+                                  height: 55,
+                                  child: AppTextField(
+                                    controller: perWeightChargeChargeController,
+                                    textFieldType: TextFieldType.PHONE,
+                                    decoration: commonInputDecoration(),
+                                    textInputAction: TextInputAction.next,
+                                    errorThisFieldRequired: language.field_required_msg,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
+                                    ],
+                                    validator: (s) {
+                                      if (s!.trim().isEmpty) return language.field_required_msg;
+                                      return null;
+                                    },
+                                  ),
                                 ),
                               ],
                             ),

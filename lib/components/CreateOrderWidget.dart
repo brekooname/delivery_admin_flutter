@@ -309,6 +309,8 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                             difference = pickFromDateTime!.difference(deliverFromDateTime!);
                             differenceCurrentTime = DateTime.now().difference(pickFromDateTime!);
                           }
+
+
                           if (differenceCurrentTime.inMinutes > 0) return toast(language.pickup_current_validation_msg);
                           if (difference.inMinutes > 0) return toast(language.pickup_deliver_validation_msg);
                           extraChargesList();
@@ -420,6 +422,7 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                                     ],
                                     onChanged: (value) {
                                       delivery = value!;
+                                      // getCityApiCall();
                                       setState(() {});
                                     },
                                   ),
@@ -438,6 +441,7 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                                     ],
                                     onChanged: (value) {
                                       delivery1 = value!;
+                                      // getCityApiCall();
                                       setState(() {});
                                     },
                                   ),
@@ -682,6 +686,7 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                               ],
                               onChanged: (value) {
                                 delivery = value!;
+                                getCityApiCall();
                                 setState(() {});
                               },
                             ),
@@ -700,6 +705,7 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                               ],
                               onChanged: (value) {
                                 delivery1 = value!;
+                                getCityApiCall();
                                 setState(() {});
                               },
                             ),
@@ -739,8 +745,13 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                                     child: Icon(Icons.remove, color: appStore.isDarkMode ? Colors.white : Colors.grey),
                                   ),
                                   onTap: () {
+
                                     if (double.parse(weightController.text) > 1) {
                                       weightController.text = (double.parse(weightController.text) - 1).toString();
+                                    }
+                                    if (double.tryParse(weightController.text)! < cityData!.minWeight!) {
+                                      weightController.text = cityData!.minWeight.toString();
+                                      showAlertDialog2(context);
                                     }
                                   },
                                 ),
@@ -752,6 +763,10 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                                     textAlign: TextAlign.center,
                                     maxLength: 10,
                                     textFieldType: TextFieldType.PHONE,
+                                    // validator: (value) {
+                                    //   if (double.tryParse(weightController.text)! > cityData!.maxWeight! || double.tryParse(weightController.text)! < cityData!.minWeight!) return errorThisFieldRequired;
+                                    //   return null;
+                                    // },
                                     inputFormatters: [
                                       FilteringTextInputFormatter.allow(RegExp('[0-9 .]')),
                                     ],
@@ -770,6 +785,15 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                                   ),
                                   onTap: () {
                                     weightController.text = (double.parse(weightController.text) + 1).toString();
+                                    if (double.tryParse(weightController.text)! > cityData!.maxWeight!) {
+                                      weightController.text = cityData!.maxWeight.toString();
+                                     showAlertDialog(context);
+                                    }
+                                    if (double.tryParse(weightController.text)! < cityData!.minWeight!) {
+                                      weightController.text = cityData!.minWeight.toString();
+                                      // showAlertDialog2(context);
+                                    }
+
                                   },
                                 ),
                               ],
@@ -911,7 +935,7 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                               deliverLong = null;
                               pickPredictionList = [];
                               deliverPredictionList = [];
-                              getCityApiCall();
+                              // getCityApiCall();
                               setState(() {});
                             },
                             validator: (value) {
@@ -943,7 +967,10 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                           onChanged: (value) {
                             selectedCity = value!;
                             getCityDetailApiCall();
-                            setState(() {});
+                            print(cityData!.minWeight);
+                            setState(() {
+                              weightController.text = cityData!.minWeight.toString();
+                            });
                           },
                           validator: (value) {
                             if (selectedCity == null) return errorThisFieldRequired;
@@ -1282,4 +1309,58 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
       ],
     );
   }
+}
+showAlertDialog(BuildContext context) {
+
+  // set up the button
+  Widget okButton = TextButton(
+    child: Text("OK"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Exceeding Weight"),
+    content: Text("Weight is exceeding than maximum value"),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+showAlertDialog2(BuildContext context) {
+
+  // set up the button
+  Widget okButton = TextButton(
+    child: Text("OK"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Decreasing Weight"),
+    content: Text("Weight is decreasing than minimum value"),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

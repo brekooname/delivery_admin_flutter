@@ -144,6 +144,9 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
   getCityDetailApiCall() async {
     await getCityDetail(selectedCity ?? 0).then((value) async {
       cityData = value;
+      if (double.tryParse(weightController.text)! < value!.minWeight!) {
+        weightController.text = cityData!.minWeight.toString();
+      }
       setState(() {});
     }).catchError((error) {});
   }
@@ -665,7 +668,7 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                           ),
                         ],
                       ),
-                      SizedBox(width: 8),
+                      SizedBox(width: 16),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -718,8 +721,90 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
 
                     ],
                   ),
-                SizedBox(height: 8),
+                // SizedBox(height: 8),
                 ////////////SHEIKH////////////////
+                SizedBox(height: 16),
+
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(language.country, style: boldTextStyle()),
+                          SizedBox(height: 8),
+                          DropdownButtonFormField<int>(
+                            value: selectedCountry,
+                            decoration: commonInputDecoration(),
+                            dropdownColor: Theme.of(context).cardColor,
+                            style: primaryTextStyle(),
+                            items: countryList.map<DropdownMenuItem<int>>((item) {
+                              return DropdownMenuItem(
+                                value: item.id,
+                                child: Text(item.name ?? ''),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              selectedCountry = value!;
+                              selectedCity = null;
+                              cityData = null;
+                              pickAddressCont.clear();
+                              pickLat = null;
+                              pickLong = null;
+                              deliverAddressCont.clear();
+                              deliverLat = null;
+                              deliverLong = null;
+                              pickPredictionList = [];
+                              deliverPredictionList = [];
+                              // getCityApiCall();
+                              setState(() {});
+                            },
+                            validator: (value) {
+                              if (selectedCountry == null) return errorThisFieldRequired;
+                              return null;
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 16),
+                    Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(language.city, style: boldTextStyle()),
+                            SizedBox(height: 8),
+                            DropdownButtonFormField<int>(
+                              value: selectedCity,
+                              decoration: commonInputDecoration(),
+                              dropdownColor: Theme.of(context).cardColor,
+                              style: primaryTextStyle(),
+                              items: cityList.map<DropdownMenuItem<int>>((item) {
+                                return DropdownMenuItem(
+                                  value: item.id,
+                                  child: Text(item.name ?? ''),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                selectedCity = value!;
+                                getCityDetailApiCall();
+
+                                setState(() {
+                                  weightController.text = cityData!.minWeight.toString();
+                                });
+                              },
+                              validator: (value) {
+                                if (selectedCity == null) return errorThisFieldRequired;
+                                return null;
+                              },
+                            ),
+                          ],
+                        )),
+                    SizedBox(width: 16),
+                    Spacer(),
+                  ],
+                ),
                 SizedBox(height: 16),
                 Column(
                   children: [
@@ -902,87 +987,7 @@ class CreateOrderWidgetState extends State<CreateOrderWidget> {
                     );
                   }).toList(),
                 ),
-                SizedBox(height: 16),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(language.country, style: boldTextStyle()),
-                          SizedBox(height: 8),
-                          DropdownButtonFormField<int>(
-                            value: selectedCountry,
-                            decoration: commonInputDecoration(),
-                            dropdownColor: Theme.of(context).cardColor,
-                            style: primaryTextStyle(),
-                            items: countryList.map<DropdownMenuItem<int>>((item) {
-                              return DropdownMenuItem(
-                                value: item.id,
-                                child: Text(item.name ?? ''),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              selectedCountry = value!;
-                              selectedCity = null;
-                              cityData = null;
-                              pickAddressCont.clear();
-                              pickLat = null;
-                              pickLong = null;
-                              deliverAddressCont.clear();
-                              deliverLat = null;
-                              deliverLong = null;
-                              pickPredictionList = [];
-                              deliverPredictionList = [];
-                              // getCityApiCall();
-                              setState(() {});
-                            },
-                            validator: (value) {
-                              if (selectedCountry == null) return errorThisFieldRequired;
-                              return null;
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 16),
-                    Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(language.city, style: boldTextStyle()),
-                        SizedBox(height: 8),
-                        DropdownButtonFormField<int>(
-                          value: selectedCity,
-                          decoration: commonInputDecoration(),
-                          dropdownColor: Theme.of(context).cardColor,
-                          style: primaryTextStyle(),
-                          items: cityList.map<DropdownMenuItem<int>>((item) {
-                            return DropdownMenuItem(
-                              value: item.id,
-                              child: Text(item.name ?? ''),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            selectedCity = value!;
-                            getCityDetailApiCall();
-                            print(cityData!.minWeight);
-                            setState(() {
-                              weightController.text = cityData!.minWeight.toString();
-                            });
-                          },
-                          validator: (value) {
-                            if (selectedCity == null) return errorThisFieldRequired;
-                            return null;
-                          },
-                        ),
-                      ],
-                    )),
-                    SizedBox(width: 16),
-                    Spacer(),
-                  ],
-                ),
+
                 SizedBox(height: 16),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
